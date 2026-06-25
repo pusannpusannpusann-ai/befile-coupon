@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>チケット発行（来院者名のみ入力）</title>
+
+<!-- 本家のCSSを読み込んで見た目を寄せる -->
+<link rel="stylesheet" href="https://www.beauty-befile.com/css/style.css">
+
+<style>
+  /* このファイル独自のスタイル（本家CSSが効かない場合のフォールバック兼ロック表示） */
+  body {
+    font-family: -apple-system, "Hiragino Kaku Gothic ProN", "Yu Gothic", sans-serif;
+    background: #faf6f3;
+    margin: 0;
+    padding: 24px 16px;
+    color: #333;
+  }
+  .wrap { max-width: 480px; margin: 0 auto; }
+  .note {
+    background: #fff4e5;
+    border: 1px solid #f0c98a;
+    border-radius: 8px;
+    padding: 12px 14px;
+    font-size: 13px;
+    line-height: 1.7;
+    margin-bottom: 20px;
+  }
+  .field { margin-bottom: 18px; }
+  .field label {
+    display: block;
+    font-weight: bold;
+    font-size: 14px;
+    margin-bottom: 6px;
+  }
+  .req {
+    background: #e0506a;
+    color: #fff;
+    font-size: 11px;
+    padding: 2px 6px;
+    border-radius: 3px;
+    margin-right: 6px;
+  }
+  .field input[type="text"] {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 12px;
+    font-size: 16px; /* iOSで自動ズームしないように16px以上 */
+    border: 1px solid #ccc;
+    border-radius: 6px;
+  }
+  /* ロック済み項目：グレーアウトして変更不可とわかるように */
+  .locked input[type="text"] {
+    background: #eee;
+    color: #777;
+    cursor: not-allowed;
+  }
+  .lock-tag {
+    font-size: 11px;
+    color: #999;
+    margin-left: 6px;
+    font-weight: normal;
+  }
+  .btn {
+    width: 100%;
+    padding: 15px;
+    font-size: 17px;
+    font-weight: bold;
+    color: #fff;
+    background: #c9a06a;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    margin-top: 8px;
+  }
+  .btn:active { opacity: .85; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="note">
+    <strong>お名前のみ</strong>ご入力ください（例）品川　太郎 のように<strong>姓と名の間にスペース</strong>を空けてください）。<br>
+    入力後、下の「チケットを発行する」ボタンを押してください。
+  </div>
+
+  <!-- 本家ticket.phpへ直接送信 -->
+  <form method="post" name="inputForm" action="https://www.beauty-befile.com/ticket.php">
+
+    <div class="field">
+      <label><span class="req">必須</span>お名前（来院者名）</label>
+      <input type="text" name="ComingName" value="" placeholder="例）品川　太郎" autofocus required>
+    </div>
+
+    <!-- 紹介者情報：画面には表示せず、送信時のみ含める -->
+    <input type="hidden" name="MemberNumber" value="2604543">
+    <input type="hidden" name="MemberName" value="塩田　真路">
+
+    <input type="hidden" name="mode" value="">
+    <button type="button" class="btn" onclick="Submit()">チケットを発行する</button>
+  </form>
+
+</div>
+
+<script>
+  // 本家と同じ送信処理：mode=chk をセットしてから送信
+  function Submit() {
+    var f = document.inputForm;
+    if (f.ComingName.value.trim() === "") {
+      alert("来院者名を入力してください。");
+      f.ComingName.focus();
+      return;
+    }
+    f.mode.value = "chk";
+    f.submit();
+  }
+</script>
+</body>
+</html>
