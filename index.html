@@ -76,6 +76,9 @@
   }
   .btn:active { opacity: .85; }
 </style>
+
+<!-- GoatCounter 匿名アクセス解析（個人情報は一切送らない・訪問者数の計測のみ） -->
+<script data-goatcounter="https://ai-beaute.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
 </head>
 <body>
 <div class="wrap">
@@ -113,7 +116,14 @@
       return;
     }
     f.mode.value = "chk";
-    f.submit();
+    // 発行カウント（匿名・名前など個人情報は一切送らない。発行イベントの回数のみ）
+    try {
+      if (window.goatcounter && window.goatcounter.count) {
+        window.goatcounter.count({ path: "coupon-issued", title: "Coupon Issued", event: true });
+      }
+    } catch (e) {}
+    // 計測ビーコンが飛ぶ猶予をとってから送信（体感ほぼ無し）
+    setTimeout(function () { f.submit(); }, 250);
   }
 </script>
 </body>
