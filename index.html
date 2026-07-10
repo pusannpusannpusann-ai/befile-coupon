@@ -249,6 +249,20 @@
 </div>
 
 <script>
+  // 名前の形式チェック（名前そのものは送らない。「ちゃんとした入力か」の判定結果だけ匿名カウントする）
+  function nameQuality(name) {
+    var n = name.replace(/[\s　]/g, "");        // 空白を除いた本体
+    if (n.length < 2) return "suspect";              // 1文字だけ
+    if (/^(.)\1+$/.test(n)) return "suspect";        // 同じ文字の繰り返し（あああ 等）
+    if (/[0-9０-９!-\/:-@\[-`{-~]/.test(name)) return "suspect"; // 数字・記号入り
+    var lower = name.toLowerCase();
+    var dummies = ["テスト", "てすと", "test", "名無し", "ななし", "匿名", "サンプル", "sample"];
+    for (var i = 0; i < dummies.length; i++) {
+      if (lower.indexOf(dummies[i]) !== -1) return "suspect";
+    }
+    return "ok";
+  }
+
   // 本家と同じ送信処理：mode=chk をセットしてから送信
   function Submit() {
     var f = document.inputForm;
@@ -258,10 +272,15 @@
       return;
     }
     f.mode.value = "chk";
-    // 発行カウント（匿名・名前など個人情報は一切送らない。発行イベントの回数のみ）
+    // 発行カウント（匿名・名前など個人情報は一切送らない。発行回数と形式チェック結果(ok/suspect)のみ）
     try {
       if (window.goatcounter && window.goatcounter.count) {
         window.goatcounter.count({ path: "coupon-issued", title: "Coupon Issued", event: true });
+        window.goatcounter.count({
+          path: "coupon-issued-" + nameQuality(f.ComingName.value),
+          title: "Coupon Issued (quality)",
+          event: true
+        });
       }
     } catch (e) {}
     // 計測ビーコンが飛ぶ猶予をとってから送信（体感ほぼ無し）
