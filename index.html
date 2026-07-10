@@ -75,6 +75,67 @@
     margin-top: 8px;
   }
   .btn:active { opacity: .85; }
+
+  /* ▼ 使用方法・割引額一覧セクション */
+  .info-section { margin-top: 32px; }
+  .info-section h2 {
+    font-size: 16px;
+    color: #a4794a;
+    border-bottom: 2px solid #c9a06a;
+    padding-bottom: 6px;
+    margin: 0 0 12px;
+  }
+  .steps {
+    margin: 0;
+    padding-left: 22px;
+    font-size: 14px;
+    line-height: 1.8;
+  }
+  .steps li { margin-bottom: 8px; }
+  .warn {
+    background: #fdeaea;
+    border: 1px solid #e8a5a5;
+    border-radius: 6px;
+    padding: 10px 12px;
+    font-size: 13px;
+    color: #b23b3b;
+    font-weight: bold;
+    margin-top: 12px;
+  }
+  .price-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+  }
+  .price-table th {
+    background: #c9a06a;
+    color: #fff;
+    padding: 8px 6px;
+    font-size: 13px;
+  }
+  .price-table td {
+    border: 1px solid #e5d9c8;
+    padding: 9px 8px;
+    background: #fff;
+  }
+  .price-table tr:nth-child(even) td { background: #faf6f3; }
+  .price-table td.num {
+    text-align: center;
+    white-space: nowrap;
+  }
+  .price-table td.off {
+    text-align: center;
+    white-space: nowrap;
+    color: #c0392b;
+    font-weight: bold;
+  }
+  .notes {
+    margin: 12px 0 0;
+    padding-left: 18px;
+    font-size: 11px;
+    color: #888;
+    line-height: 1.8;
+  }
 </style>
 
 <!-- GoatCounter 匿名アクセス解析（個人情報は一切送らない・訪問者数の計測のみ） -->
@@ -103,6 +164,87 @@
     <input type="hidden" name="mode" value="">
     <button type="button" class="btn" onclick="Submit()">チケットを発行する</button>
   </form>
+
+  <!-- 優待チケットの使用方法 -->
+  <div class="info-section">
+    <h2>優待チケットの使用方法</h2>
+    <ol class="steps">
+      <li>上の欄にお名前を入力して「チケットを発行する」ボタンを押します。</li>
+      <li>発行されたチケット画面を<strong>スクリーンショットで保存</strong>してください。</li>
+      <li>施術当日、<strong>施術料金のお会計時までに</strong>受付でスクリーンショットをご提示ください。</li>
+    </ol>
+    <div class="warn">⚠️ お会計後のご提出は無効となりますのでご注意ください。</div>
+  </div>
+
+  <!-- 割引額一覧 -->
+  <div class="info-section">
+    <h2>割引額一覧</h2>
+    <table class="price-table">
+      <tr>
+        <th>施術名</th>
+        <th>施術料金(税込)</th>
+        <th>割引額</th>
+      </tr>
+      <tr>
+        <td>アマリスZレーシック ※1</td>
+        <td class="num">32万円</td>
+        <td class="off">5万円</td>
+      </tr>
+      <tr>
+        <td>Lext(レクスト)</td>
+        <td class="num">38万円</td>
+        <td class="off">1万円</td>
+      </tr>
+      <tr>
+        <td>クリスタルZレーシック ※1</td>
+        <td class="num">26万円</td>
+        <td class="off">3万円</td>
+      </tr>
+      <tr>
+        <td>スタンダードZレーシック</td>
+        <td class="num">19万円</td>
+        <td class="off">1万円</td>
+      </tr>
+      <tr>
+        <td>品川イントラレーシックアドバンス</td>
+        <td class="num">15.8万円</td>
+        <td class="off">1万円</td>
+      </tr>
+      <tr>
+        <td>ICL（眼内コンタクトレンズ）-4D未満</td>
+        <td class="num">40.7万円〜</td>
+        <td class="off">1万円</td>
+      </tr>
+      <tr>
+        <td>ICL（眼内コンタクトレンズ）-4D以上</td>
+        <td class="num">51.7万円〜</td>
+        <td class="off">2万円</td>
+      </tr>
+      <tr>
+        <td>IPCL</td>
+        <td class="num">53.7万円〜</td>
+        <td class="off">2万円</td>
+      </tr>
+      <tr>
+        <td>IPCLプラス（老眼用眼内コンタクトレンズ）</td>
+        <td class="num">74万円</td>
+        <td class="off">3万円</td>
+      </tr>
+      <tr>
+        <td>遠近両用白内障手術 ※2</td>
+        <td class="num">115万円</td>
+        <td class="off">5万円</td>
+      </tr>
+    </table>
+    <ul class="notes">
+      <li>※1 福岡院の「学割」プランで施術された場合、割引額は異なります。</li>
+      <li>※2 遠近両用白内障手術は東京・福岡のみ実施しています。クリニックによって価格が異なる場合があります。</li>
+      <li>片眼の場合、割引額は表示価格の半額になります。</li>
+      <li>他の割引券との併用はできません。</li>
+      <li>優待チケットはお一人様1枚のみご利用いただけます。</li>
+      <li>優待内容は予告なく変更される場合があります。</li>
+    </ul>
+  </div>
 
 </div>
 
