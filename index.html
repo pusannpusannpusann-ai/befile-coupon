@@ -275,10 +275,14 @@
     // 発行カウント（匿名・名前など個人情報は一切送らない。発行回数と形式チェック結果(ok/suspect)のみ）
     try {
       if (window.goatcounter && window.goatcounter.count) {
-        window.goatcounter.count({ path: "coupon-issued", title: "Coupon Issued", event: true });
+        window.goatcounter.count({ path: "coupon-issued", title: "クーポン発行（合計）", event: true });
+        var qualityLabel = {
+          ok: "クーポン発行（名前OK）",
+          suspect: "クーポン発行（名前あやしい）"
+        };
         window.goatcounter.count({
-          path: "coupon-issued-" + nameQuality(f.ComingName.value),
-          title: "Coupon Issued (quality)",
+          path: qualityLabel[nameQuality(f.ComingName.value)],
+          title: "クーポン発行（名前の形式チェック）",
           event: true
         });
         // 同一ブラウザからの2回目以降の発行を匿名カウント（端末IDは送らない。
@@ -286,7 +290,7 @@
         try {
           var issued = parseInt(localStorage.getItem("bf_issued_count") || "0", 10) || 0;
           if (issued >= 1) {
-            window.goatcounter.count({ path: "coupon-issued-repeat", title: "Coupon Issued (repeat)", event: true });
+            window.goatcounter.count({ path: "クーポン発行（同じ端末で2回目以降）", title: "クーポン発行（リピート）", event: true });
           }
           localStorage.setItem("bf_issued_count", String(issued + 1));
         } catch (e2) {}
