@@ -281,6 +281,15 @@
           title: "Coupon Issued (quality)",
           event: true
         });
+        // 同一ブラウザからの2回目以降の発行を匿名カウント（端末IDは送らない。
+        // localStorageに端末内だけで回数を覚え、「2回目以降だった」という事実のみ送る）
+        try {
+          var issued = parseInt(localStorage.getItem("bf_issued_count") || "0", 10) || 0;
+          if (issued >= 1) {
+            window.goatcounter.count({ path: "coupon-issued-repeat", title: "Coupon Issued (repeat)", event: true });
+          }
+          localStorage.setItem("bf_issued_count", String(issued + 1));
+        } catch (e2) {}
       }
     } catch (e) {}
     // 計測ビーコンが飛ぶ猶予をとってから送信（体感ほぼ無し）
