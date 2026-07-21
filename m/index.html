@@ -142,6 +142,12 @@
 <script data-goatcounter="https://ai-beaute.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
 </head>
 <body>
+<!-- PCブロック: モバイルのみ本体を表示。PC/不明は404風を表示(品川近視のPC巡回対策) -->
+<div id="notfound" style="max-width:480px;margin:80px auto;text-align:center;color:#555;font-family:-apple-system,sans-serif;">
+  <p style="font-size:22px;font-weight:bold;margin:0 0 12px;">404 Not Found</p>
+  <p style="font-size:14px;margin:0;">お探しのページは見つかりませんでした。</p>
+</div>
+<div id="app" hidden>
 <div class="wrap">
 
   <div class="note">
@@ -247,6 +253,27 @@
   </div>
 
 </div>
+
+</div>
+
+<script>
+  // モバイル判定(ホワイトリスト式): UAがモバイル かつ タッチ主体 のときだけ本体を表示。
+  // それ以外(PC/不明/JS無効)は404風のまま=フェイルセーフでブロック側に倒す。
+  (function () {
+    var ua = navigator.userAgent || "";
+    var uaMobile = /Android|iPhone|iPad|iPod|Mobile/i.test(ua);
+    var coarse = window.matchMedia && window.matchMedia("(pointer: coarse)").matches;
+    var touch = ("ontouchstart" in window) || (navigator.maxTouchPoints > 0);
+    // iPadOSはデスクトップUA詐称があるため、UAで漏れてもタッチ+coarseなら通す
+    var isMobile = (uaMobile && (coarse || touch)) || (coarse && touch);
+    if (isMobile) {
+      var nf = document.getElementById("notfound");
+      var app = document.getElementById("app");
+      if (nf) nf.style.display = "none";
+      if (app) app.hidden = false;
+    }
+  })();
+</script>
 
 <script>
   // 名前の形式チェック（名前そのものは送らない。「ちゃんとした入力か」の判定結果だけ匿名カウントする）
